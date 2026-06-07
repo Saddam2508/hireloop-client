@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@heroui/react";
 import { useSession, signOut } from "@/lib/auth-client";
 
@@ -10,9 +11,10 @@ interface NavLink {
   href: string;
 }
 
-export default function Navbar(): JSX.Element {
+export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const { data: session } = useSession();
+  const router = useRouter();
 
   const user = session?.user;
 
@@ -21,18 +23,9 @@ export default function Navbar(): JSX.Element {
   };
 
   const navLinks: NavLink[] = [
-    {
-      label: "Browse Jobs",
-      href: "/jobs",
-    },
-    {
-      label: "Companies",
-      href: "/companies",
-    },
-    {
-      label: "Pricing",
-      href: "/pricing",
-    },
+    { label: "Browse Jobs", href: "/jobs" },
+    { label: "Companies", href: "/companies" },
+    { label: "Pricing", href: "/pricing" },
   ];
 
   return (
@@ -89,14 +82,12 @@ export default function Navbar(): JSX.Element {
                 </Link>
               )}
 
-              <Button
-                as={Link}
-                href="/register"
-                radius="lg"
-                className="h-11 bg-white px-6 text-sm font-semibold text-black hover:bg-gray-200"
-              >
-                Get Started
-              </Button>
+              {/* ✅ Link দিয়ে wrap করা হয়েছে */}
+              <Link href="/register">
+                <Button className="h-11 bg-white px-6 text-sm font-semibold text-black hover:bg-gray-200">
+                  Get Started
+                </Button>
+              </Link>
             </div>
           </div>
 
@@ -161,22 +152,31 @@ export default function Navbar(): JSX.Element {
 
             <div className="border-t border-white/10 pt-4">
               <div className="flex flex-col gap-3">
-                <Link
-                  href="/login"
-                  className="rounded-xl px-4 py-3 text-base font-medium text-violet-400 transition hover:bg-white/5"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Sign In
-                </Link>
+                {user ? (
+                  <>
+                    <span className="px-4 text-sm text-gray-300">
+                      Hi, {user.name}!
+                    </span>
+                    <Button onClick={handleSignOut} variant="ghost">
+                      Sign Out
+                    </Button>
+                  </>
+                ) : (
+                  <Link
+                    href="/auth/signin"
+                    className="rounded-xl px-4 py-3 text-base font-medium text-violet-400 transition hover:bg-white/5"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Sign In
+                  </Link>
+                )}
 
-                <Button
-                  as={Link}
-                  href="/register"
-                  className="bg-white font-semibold text-black"
-                  radius="lg"
-                >
-                  Get Started
-                </Button>
+                {/* ✅ Link দিয়ে wrap করা হয়েছে */}
+                <Link href="/register" onClick={() => setIsMenuOpen(false)}>
+                  <Button className="h-11 bg-white px-6 text-sm font-semibold text-black hover:bg-gray-200 rounded-lg">
+                    Get Started
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
