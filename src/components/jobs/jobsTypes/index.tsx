@@ -9,6 +9,7 @@ export type Job = {
   companyLogo?: string;
   companyName?: string;
   jobTitle: string;
+  deadline: string;
   responsibilities?: string;
   jobCategory?: JobCategory;
   location?: string;
