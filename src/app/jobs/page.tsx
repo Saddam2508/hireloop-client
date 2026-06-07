@@ -1,6 +1,6 @@
 import JobListingContainer from "@/components/jobs";
 import { getJobs } from "@/lib/api/jobs";
-import { Job } from "@/types/job";
+import { Job } from "@/components/jobs/jobsTypes";
 
 export default async function Page() {
   const jobs: Job[] = await getJobs();
