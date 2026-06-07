@@ -10,6 +10,7 @@ export type Job = {
   companyName?: string;
   jobTitle: string;
   responsibilities?: string;
+  jobCategory?: JobCategory;
   location?: string;
   isRemote?: boolean;
   jobType?: string;
