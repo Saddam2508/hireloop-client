@@ -1,4 +1,4 @@
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
 export const serverFetch = async <T = unknown,>(path: string): Promise<T> => {
   const res = await fetch(`${baseUrl}${path}`);
