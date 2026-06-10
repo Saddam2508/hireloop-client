@@ -83,7 +83,7 @@ export default function Navbar() {
               )}
 
               {/* ✅ Link দিয়ে wrap করা হয়েছে */}
-              <Link href="/register">
+              <Link href="/auth/signup">
                 <Button className="h-11 bg-white px-6 text-sm font-semibold text-black hover:bg-gray-200">
                   Get Started
                 </Button>
