@@ -31,4 +31,17 @@ export const auth = betterAuth({
     },
   },
   plugins: [jwt()],
+
+  user: {
+    additionalFields: {
+      role: {
+        type: "string",
+        defaultValue: "seeker",
+      },
+      plan: {
+        type: "string",
+        defaultValue: "seeker_free",
+      },
+    },
+  },
 });
