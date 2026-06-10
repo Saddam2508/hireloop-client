@@ -1,7 +1,7 @@
 import { auth } from "../auth";
 import { headers } from "next/headers";
 
-type SessionUser = {
+export type SessionUser = {
   id: string;
   name: string;
   email: string;
@@ -9,6 +9,8 @@ type SessionUser = {
   image?: string | null;
   createdAt: Date;
   updatedAt: Date;
+  role?: "seeker" | "recruiter" | "admin";
+  plan?: "seeker_free" | "recruiter_free";
 };
 
 export const getUserSession = async (): Promise<SessionUser | null> => {
@@ -16,5 +18,11 @@ export const getUserSession = async (): Promise<SessionUser | null> => {
     headers: await headers(),
   });
 
-  return session?.user || null;
+  if (!session?.user) return null;
+
+  return {
+    ...session.user,
+    role: session.user.role as SessionUser["role"],
+    plan: session.user.plan as SessionUser["plan"],
+  };
 };
